@@ -1,7 +1,6 @@
 import streamlit as st
 import pandas as pd
 import csv
-import matplotlib.pyplot as plt
 import numpy as np
 from geopy.geocoders import Nominatim
 import geopy.distance
