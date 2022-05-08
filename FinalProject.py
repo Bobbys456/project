@@ -64,10 +64,27 @@ def make_bar(bar_data):
     st.plotly_chart(fig)
 
 def make_map(locations):
-    Lat = [float(item) for item in locations['Lat'].tolist()]
-    Long = [float(item) for item in locations['Long'].tolist()]
-    map_data = pd.DataFrame(zip(Lat, Long), columns=['lat', 'lon'])
-    st.map(map_data, zoom=4, use_container_width=True)
+     #This mapping function allows for the user to select a specific crime and plot all occurences of said crime with each point colorcoded to identify different districts
+
+    locations = locations[locations['Long'] != 0]
+
+    locations.rename(columns = {'Lat': 'latitude','Long': 'longitude'}, inplace = True)
+    
+    view_state = pdk.ViewState(latitude=locations['latitude'].mean(), longitude=locations['longitude'].mean(), zoom= 12)
+
+    #Create layers with randomley generated colors for the dots
+    layer = []
+    for district in locations['DISTRICT']:
+        layed = pdk.Layer("ScatterplotLayer", data= locations[locations['DISTRICT'] == district],get_position='[longitude, latitude]', get_radius=100, pickable=True, filled=True, get_color = [np.random.randint(0,255), np.random.randint(0,255),np.random.randint(0,255)])
+        layer.append(layed)
+
+    tool_tip = {'html': 'Listing:<br><b>{name}</b>', 'style': {'backgroundcolor': 'steelblue', 'color': 'white'}}
+    map = pdk.Deck(map_style='mapbox://styles/mapbox/light-v9',
+                   initial_view_state= view_state,
+                   layers=layer,
+                   tooltip=tool_tip)
+
+    st.pydeck_chart(map)
 
 def get_coordinates(select, data):
     if select == 'All':
