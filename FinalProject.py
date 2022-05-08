@@ -259,8 +259,8 @@ def make_pie(data, districts):
 
 def main():
 
-    data = get_data(r'C:\Users\bobby\OneDrive\Desktop\SubmissionsFolder\CS230\testing\BostonCrime2022_8000_sample.csv')
-    districts = get_data(r'C:\Users\bobby\OneDrive\Desktop\SubmissionsFolder\CS230\testing\BostonDistricts.csv')
+    data = get_data(r'.\BostonCrime2022_8000_sample.csv')
+    districts = get_data(r'.\BostonDistricts.csv')
     crime_names, crime_frq = crimes_type_freq(data)
 
     page = st.sidebar.selectbox(
@@ -276,7 +276,7 @@ def main():
 
     if page == "Homepage":
         st.header('Boston Crime Statistics')
-        image = Image.open(r'C:\Users\bobby\OneDrive\Desktop\SubmissionsFolder\CS230\testing\BostonPic.png')
+        image = Image.open(r'.\BostonPic.png')
         st.image(image)
         st.write('The following pages present different views for analyzing Boston crime data for the first 3 months of 2022. ')
 
