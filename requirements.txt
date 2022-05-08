@@ -1,1 +1,1 @@
-pip install geopy 
+python pip install geopy 
